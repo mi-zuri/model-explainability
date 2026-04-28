@@ -2,8 +2,14 @@
 
 **Michał Żurawski & Aleksander Hański**
 
-We address multi-label classification of synthetic multivariate time series, where each series may contain zero or more of five distinct defect patterns. 
+We address multi-label classification of synthetic multivariate time series, where each series may contain zero or more of five distinct defect patterns.
 Beyond classification, we emphasize model explainability — identifying which part of which sensor signal is responsible for a detected defect.
+
+---
+
+![analysis preview](docs/images/preview.png)
+
+---
 
 ## Requirements
 
@@ -46,12 +52,14 @@ Training uses early stopping and learning rate reduction on plateau.
 ## Explainability Approaches
 
 ### 1. Saliency Maps + Attention
-Computes input gradients via `tf.GradientTape` to identify timesteps that most influence the model's prediction. 
+
+Computes input gradients via `tf.GradientTape` to identify timesteps that most influence the model's prediction.
 Attention weights are visualized alongside. This approach captures sensitivity but does not directly pinpoint the physical cause of a defect.
 
 ### 2. Optimal Value Analysis
-For each timestep and sensor, systematically varies the input value and measures how the model's prediction for a given class changes. 
+
+For each timestep and sensor, systematically varies the input value and measures how the model's prediction for a given class changes.
 The point where prediction change is maximized is identified as the likely defect location.
 
-This produces a **Defect Importance Map** that highlights the specific sensor and timestep most responsible for triggering each class prediction — 
+This produces a **Defect Importance Map** that highlights the specific sensor and timestep most responsible for triggering each class prediction —
 more interpretable than gradient-based methods for this task.
